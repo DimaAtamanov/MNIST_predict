@@ -9,7 +9,7 @@ import sys
 import os.path
 
 from tensorflow import convert_to_tensor, cast, reshape, float32, argmax
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from tensorflow import image
 from tensorflow import data
 
@@ -87,12 +87,13 @@ class MyPainter(QtWidgets.QLabel):
             return
 
         self.painter.begin(self.canvas)
-        self.painter.scale(0.112, 0.112)
+        # self.painter.scale(0.112, 0.112)
         # Настройка свойств кисти
         mypen = self.painter.pen()
         mypen.setWidth(25)
         mypen.setCapStyle(QtCore.Qt.PenCapStyle.RoundCap)
         self.painter.setPen(mypen)
+        print(e.pos().x(), e.pos().y())
         self.painter.drawLine(self.last_x, self.last_y, e.pos().x(), e.pos().y())
         self.painter.end()
         self.setPixmap(self.canvas)
@@ -939,9 +940,8 @@ class Ui_MainWindow(object):
         fit_sample = fit_sample.batch(1)
         self.predict_model.fit(
             fit_sample,
-            epochs=10,
+            epochs=5,
             verbose=0,
-            use_multiprocessing=True,
         )
         self.predict_model.save(path_to_model)
         self.predict_model = load_model(path_to_model)
