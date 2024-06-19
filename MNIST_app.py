@@ -93,7 +93,6 @@ class MyPainter(QtWidgets.QLabel):
         mypen.setWidth(25)
         mypen.setCapStyle(QtCore.Qt.PenCapStyle.RoundCap)
         self.painter.setPen(mypen)
-        print(e.pos().x(), e.pos().y())
         self.painter.drawLine(self.last_x, self.last_y, e.pos().x(), e.pos().y())
         self.painter.end()
         self.setPixmap(self.canvas)
